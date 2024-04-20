@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Curriculum42!</h1>
+
+    <!-- Botão para ir para a página de login -->
+    <a href="{% url 'login' %}"><button>Login</button></a>
+    
+    <!-- Botão para ir para a página de cadastro -->
+    <a href="{% url 'signup' %}"><button>Sign Up</button></a>
+
+    <h1>Informações</h1>
+    <p>{{ content.information }}</p>
+
+    <h1>Objetivos</h1>
+    <p>{{ content.objectives }}</p>
+
+    <h1>Apresentações</h1>
+    <p>{{ content.demonstrations }}</p>
+
+    <h1>Créditos</h1>
+    <p>{{ content.credits }}</p>
+</body>
+</html>
