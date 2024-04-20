@@ -1,0 +1,36 @@
+{
+  "cvs": [
+    {
+      "name": "Nome da pessoa 1",
+      "title": "Profissão",
+      "key": "idDoUsuario"
+    },
+    {
+      "name": "Nome da pessoa 2",
+      "title": "Profissão",
+      "key": "key do cv"
+    },
+    {
+      "name": "Nome da pessoa 3",
+      "title": "Profissão",
+      "key": "key do cv"
+    }
+  ],
+  "myCvs": [
+    {
+      "name": "Nome da pessoa 1",
+      "title": "Profissão",
+      "key": "key do cv"
+    },
+    {
+      "name": "Nome da pessoa 2",
+      "title": "Profissão",
+      "key": "key do cv"
+    },
+    {
+      "name": "Nome da pessoa 3",
+      "title": "Profissão",
+      "key": "key do cv"
+    }
+  ]
+}

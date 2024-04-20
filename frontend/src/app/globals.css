@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+ --white: #ffff;
+ --black: #000;
+ --primary: #f23456
+}
+
+
+body {
+  color: var(--white);
+  background:  var(--black);
+}
+.CollapsibleContent {
+  overflow: hidden;
+}
+.CollapsibleContent[data-state='open'] {
+  animation: slideDown 300ms ease-out;
+}
+.CollapsibleContent[data-state='closed'] {
+  animation: slideUp 300ms ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    height: var(--radix-collapsible-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--white);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--black);
+}
+
+/* ::selection {
+  background: var(--white);
+  text-shadow: none;
+  color: var(--black);
+} */
