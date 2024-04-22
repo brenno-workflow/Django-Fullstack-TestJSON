@@ -22,22 +22,21 @@ def signup(request):
 
             # Salvar os dados do formulário no banco de dados
             form.save()
-
+            
             # Redirecionar para a página de login após o cadastro
-            return redirect('login')
+            return JsonResponse({'message': 'Cadastro realizado com sucesso'})
         
         else:
 
             # Caso as credenciais estejam incorretas
-            form.add_error(None, 'Credenciais não cadastradas. Por favor, tente novamente.')
+            errors = form.errors.as_json()
+            return JsonResponse({'errors': json.loads(errors)}, status=400)
 
     else:
 
         # Caso o formulário não tenha sido enviado com os dados corretos
-        form = UserForm()
-
-    return render(request, 'signup.html', {'form': form})
-
+        return JsonResponse({'error': 'Método não permitido'}, status=405)
+    
 def login(request):
 
     # Verificamos se o método da solicitação é POST
@@ -57,39 +56,34 @@ def login(request):
                 # Buscar a linha no banco pelo email
                 user = User.objects.get(email=email)
 
-                # Buscar o ID da linha
-                user_id = user.id
+                if password == user.password:
+                        
+                    # Define a duração da sessão em segundos (86400 segundos = 1 dia)
+                    request.session.set_expiry(86400)  
 
+                    # Armazena o ID do usuário na sessão
+                    request.session['user_id'] = user.id  
+
+                    # Retornar token e ID do usuário na sessão
+                    return JsonResponse({'token': 'token_da_sessao', 'id': user.id})
+                    
+                else:
+
+                    # Caso as credenciais estejam incorretas
+                    return JsonResponse({'error': 'Credenciais inválidas'}, status=400)
+                
             except User.DoesNotExist:
 
-                # Retornar como None para erro
-                user = None
-                user_id = None
-
-            if user_id is not None and password == user.password:
-                    
-                # Define a duração da sessão em segundos (86400 segundos = 1 dia)
-                request.session.set_expiry(86400)  
-
-                # Armazena o ID do usuário na sessão
-                request.session['user_id'] = user.id  
-
-                # Mover para a pagina especifica
-                return redirect('signup')
-                
-            else:
-
-                # Caso as credenciais estejam incorretas
-                form.add_error(None, 'Credenciais inválidas. Por favor, tente novamente.')
+                # Caso as credenciais naõ existam
+                return JsonResponse({'error': 'Usuário não encontrado'}, status=404)
 
         else:
 
             # Caso as credenciais estejam incorretas
-            form.add_error(None, 'Erro na requisição. Por favor, tente novamente.')
+            errors = form.errors.as_json()
+            return JsonResponse({'errors': json.loads(errors)}, status=400)
 
     else:
 
         # Caso o formulário não tenha sido enviado com os dados corretos
-        form = LoginForm()
-
-    return render(request, 'login.html', {'form': form})
+        return JsonResponse({'error': 'Método não permitido'}, status=405)
